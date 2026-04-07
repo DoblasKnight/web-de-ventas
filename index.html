@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TechStore — Electrónica Premium</title>
+    <title>TechSelect — Electrónica Premium</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
       rel="stylesheet"
@@ -826,6 +826,358 @@
         border-radius: 50%;
         background: var(--accent);
       }
+
+      /* ── User Badge (header) ── */
+      .user-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 14px 6px 8px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        font-size: 13px;
+      }
+
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .user-avatar.admin {
+        background: rgba(245, 160, 0, 0.2);
+        color: var(--accent3);
+        border: 1px solid rgba(245, 160, 0, 0.3);
+      }
+      .user-avatar.cliente {
+        background: rgba(0, 245, 160, 0.15);
+        color: var(--accent);
+        border: 1px solid rgba(0, 245, 160, 0.3);
+      }
+
+      .user-name {
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      .role-tag {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 100px;
+      }
+
+      .role-tag.admin {
+        background: rgba(245, 160, 0, 0.15);
+        color: var(--accent3);
+        border: 1px solid rgba(245, 160, 0, 0.25);
+      }
+      .role-tag.cliente {
+        background: rgba(0, 245, 160, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(0, 245, 160, 0.2);
+      }
+
+      .btn-logout {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        transition: color 0.2s;
+      }
+      .btn-logout:hover {
+        color: var(--danger);
+      }
+
+      /* ── Login error ── */
+      .login-error {
+        background: rgba(255, 71, 87, 0.1);
+        border: 1px solid rgba(255, 71, 87, 0.3);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: var(--danger);
+        display: none;
+        margin-bottom: 14px;
+      }
+
+      /* ── Admin panel banner ── */
+      .admin-banner {
+        display: none;
+        background: linear-gradient(
+          135deg,
+          rgba(245, 160, 0, 0.08),
+          rgba(245, 160, 0, 0.03)
+        );
+        border: 1px solid rgba(245, 160, 0, 0.2);
+        border-radius: 16px;
+        padding: 16px 20px;
+        margin-bottom: 28px;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .admin-banner.visible {
+        display: flex;
+      }
+
+      .admin-banner-icon {
+        font-size: 22px;
+      }
+
+      .admin-banner-text strong {
+        font-family: "Syne", sans-serif;
+        font-size: 14px;
+        color: var(--accent3);
+        display: block;
+      }
+
+      .admin-banner-text span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* ── Admin card overlay ── */
+      .card-admin-actions {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        gap: 6px;
+      }
+
+      .card-admin-actions.visible {
+        display: flex;
+      }
+
+      .btn-admin-action {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: rgba(6, 9, 16, 0.75);
+        backdrop-filter: blur(6px);
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .btn-admin-action:hover {
+        color: var(--accent3);
+        border-color: rgba(245, 160, 0, 0.4);
+      }
+
+      /* ── Product Detail Modal ── */
+      .product-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(10px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 300;
+        padding: 20px;
+      }
+
+      .product-modal-overlay.open {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+      }
+
+      .product-modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        width: 100%;
+        max-width: 680px;
+        overflow: hidden;
+        animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pm-image {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        overflow: hidden;
+        background: var(--surface2);
+      }
+
+      .pm-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .pm-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(13, 17, 23, 0.9) 0%,
+          transparent 50%
+        );
+      }
+
+      .pm-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        color: #fff;
+        cursor: pointer;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .pm-close:hover {
+        background: rgba(255, 71, 87, 0.3);
+        border-color: var(--danger);
+      }
+
+      .pm-cat-badge {
+        position: absolute;
+        bottom: 16px;
+        left: 20px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 100px;
+        background: rgba(0, 245, 160, 0.15);
+        border: 1px solid rgba(0, 245, 160, 0.3);
+        color: var(--accent);
+      }
+
+      .pm-body {
+        padding: 28px;
+      }
+
+      .pm-name {
+        font-family: "Syne", sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 6px;
+      }
+
+      .pm-desc {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .pm-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .pm-spec {
+        padding: 6px 14px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .pm-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .pm-price {
+        font-family: "Syne", sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: -1px;
+      }
+
+      .pm-price small {
+        font-size: 14px;
+        color: var(--muted);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 400;
+      }
+
+      .pm-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn-pm-cart {
+        padding: 13px 28px;
+        border-radius: 14px;
+        border: none;
+        background: var(--accent);
+        color: #060910;
+        font-family: "Syne", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+
+      .btn-pm-cart:hover {
+        background: #00d484;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 24px rgba(0, 245, 160, 0.3);
+      }
+
+      .btn-pm-wish {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .btn-pm-wish:hover {
+        border-color: #ff6b81;
+        color: #ff6b81;
+      }
     </style>
   </head>
   <body>
@@ -833,10 +1185,14 @@
     <header>
       <div class="logo">
         <div class="logo-dot"></div>
-        Tech<span>Store</span>
+        TechSelect</span>
       </div>
       <div class="header-right">
-        <button class="btn-login" onclick="openLogin()">Iniciar sesión</button>
+        <div id="headerAuth">
+          <button class="btn-login" onclick="openLogin()">
+            Iniciar sesión
+          </button>
+        </div>
         <button class="btn-cart" onclick="toggleCart()">
           <svg
             width="16"
@@ -882,6 +1238,15 @@
           <div class="stat-pill">
             <div class="stat-dot" style="background: var(--accent3)"></div>
             Envío <strong>gratis</strong>
+          </div>
+        </div>
+
+        <!-- Admin Banner -->
+        <div class="admin-banner" id="adminBanner">
+          <div class="admin-banner-icon">⚙️</div>
+          <div class="admin-banner-text">
+            <strong>Panel de Administrador</strong>
+            <span>Puedes ver las acciones de edición en cada producto</span>
           </div>
         </div>
 
@@ -944,8 +1309,13 @@
     <!-- Login Modal -->
     <div class="modal-overlay" id="loginModal" onclick="closeLogin(event)">
       <div class="modal">
-        <div class="modal-logo">Tech<span>Store</span></div>
+        <div class="modal-logo">TechSelect</Select></span></div>
         <p>Accede a tu cuenta para continuar</p>
+
+        <div class="login-error" id="loginError">
+          ❌ Correo o contraseña incorrectos
+        </div>
+
         <div class="input-group">
           <label>Correo electrónico</label>
           <input type="email" id="email" placeholder="tu@correo.com" />
@@ -954,9 +1324,67 @@
           <label>Contraseña</label>
           <input type="password" id="password" placeholder="••••••••" />
         </div>
+
+        <div
+          style="
+            margin: 12px 0 4px;
+            padding: 12px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.9;
+          "
+        >
+          <strong
+            style="
+              color: var(--accent3);
+              font-size: 11px;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+            "
+            >Cuentas de prueba</strong
+          ><br />
+          <strong style="color: var(--accent3)">admin@tech.com</strong> /
+          admin123 — Administrador<br />
+          <strong style="color: var(--accent)">cliente@tech.com</strong> /
+          cliente123 — Cliente
+        </div>
+
         <div class="modal-btns">
           <button class="btn-cancel" onclick="closeLogin()">Cancelar</button>
           <button class="btn-submit" onclick="login()">Ingresar →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div
+      class="product-modal-overlay"
+      id="productModal"
+      onclick="closeProductModal(event)"
+    >
+      <div class="product-modal" id="productModalBox">
+        <div class="pm-image">
+          <img id="pmImg" src="" alt="" />
+          <div class="pm-image-overlay"></div>
+          <button class="pm-close" onclick="closeProductModal()">✕</button>
+          <span class="pm-cat-badge" id="pmCat"></span>
+        </div>
+        <div class="pm-body">
+          <div class="pm-name" id="pmName"></div>
+          <div class="pm-desc" id="pmDesc"></div>
+          <div class="pm-specs" id="pmSpecs"></div>
+          <div class="pm-footer">
+            <div class="pm-price" id="pmPrice"></div>
+            <div class="pm-actions">
+              <button class="btn-pm-wish" title="Guardar">♡</button>
+              <button class="btn-pm-cart" id="pmCartBtn">
+                Agregar al carrito →
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -968,46 +1396,99 @@
     </div>
 
     <script>
+      /* ── Mock users DB ── */
+      const USERS = [
+        {
+          id: 1,
+          name: "Admin",
+          email: "admin@tech.com",
+          password: "admin123",
+          role: "admin",
+        },
+        {
+          id: 2,
+          name: "Cliente",
+          email: "cliente@tech.com",
+          password: "cliente123",
+          role: "cliente",
+        },
+      ];
+
       const products = [
         {
           id: 1,
           name: "Laptop HP Pavilion",
           category: "portatiles",
           price: 2500,
-          img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80",
-          desc: "Intel Core i7 · 16GB RAM",
+          img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800&q=80",
+          desc: "Potencia y rendimiento para trabajo y estudio. Diseño delgado con pantalla IPS Full HD.",
+          specs: [
+            "Intel Core i7-1255U",
+            "16GB DDR4",
+            "512GB SSD NVMe",
+            '15.6" Full HD',
+            "Windows 11",
+          ],
         },
         {
           id: 2,
           name: "iPhone 15 Pro",
           category: "celulares",
           price: 4200,
-          img: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=400&q=80",
-          desc: "256GB · Titanio Natural",
+          img: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=800&q=80",
+          desc: "El iPhone más avanzado. Chip A17 Pro, cámara de 48MP y titanio de grado aeroespacial.",
+          specs: [
+            "Chip A17 Pro",
+            "256GB almacenamiento",
+            "Titanio Natural",
+            "Cámara 48MP",
+            "USB-C",
+          ],
         },
         {
           id: 3,
           name: "Nevera LG InstaView",
           category: "electrodomesticos",
           price: 3800,
-          img: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80",
-          desc: "Door-in-Door · 617L",
+          img: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=800&q=80",
+          desc: "Tecnología Door-in-Door con panel de vidrio iluminado. Ahorro energético clase A++.",
+          specs: [
+            "617 litros",
+            "Door-in-Door",
+            "Clase A++",
+            "No Frost Total",
+            "Dispensador de agua",
+          ],
         },
         {
           id: 4,
           name: "TV Samsung QLED",
           category: "electrodomesticos",
           price: 2800,
-          img: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80",
-          desc: '65" · 4K · 120Hz',
+          img: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800&q=80",
+          desc: "Pantalla QLED 4K con 120Hz y procesador Neural Quantum. Experiencia cinematográfica.",
+          specs: [
+            '65" 4K QLED',
+            "120Hz",
+            "HDR10+",
+            "Neural Quantum 4K",
+            "Smart TV Tizen",
+          ],
         },
         {
           id: 5,
           name: "MacBook Air M3",
           category: "portatiles",
           price: 5500,
-          img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&q=80",
-          desc: "Apple M3 · 16GB · 512GB",
+          img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80",
+          desc: "El portátil más vendido del mundo. Chip M3 con rendimiento increíble y hasta 18h de batería.",
+          specs: [
+            "Apple M3",
+            "16GB RAM unificada",
+            "512GB SSD",
+            "Pantalla Liquid Retina",
+            "Batería 18h",
+          ],
         },
       ];
 
@@ -1019,30 +1500,107 @@
       let cart = [];
       let currentFilter = "all";
       let cartOpen = false;
+      let currentUser = null;
 
+      /* ── Auth ── */
+      function openLogin() {
+        document.getElementById("loginError").style.display = "none";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("loginModal").classList.add("open");
+      }
+
+      function closeLogin(e) {
+        if (!e || e.target === document.getElementById("loginModal")) {
+          document.getElementById("loginModal").classList.remove("open");
+        }
+      }
+
+      function login() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const user = USERS.find(
+          (u) => u.email === email && u.password === password,
+        );
+
+        if (!user) {
+          document.getElementById("loginError").style.display = "block";
+          return;
+        }
+
+        currentUser = user;
+        document.getElementById("loginModal").classList.remove("open");
+        renderHeader();
+        renderAdminBanner();
+        renderProducts();
+        showToast(
+          `¡Hola, ${user.name}! ${user.role === "admin" ? "👑" : "👋"}`,
+        );
+      }
+
+      function logout() {
+        currentUser = null;
+        renderHeader();
+        renderAdminBanner();
+        renderProducts();
+        showToast("Sesión cerrada. ¡Hasta pronto!");
+      }
+
+      function renderHeader() {
+        const el = document.getElementById("headerAuth");
+        if (!currentUser) {
+          el.innerHTML = `<button class="btn-login" onclick="openLogin()">Iniciar sesión</button>`;
+        } else {
+          const initials = currentUser.name.charAt(0).toUpperCase();
+          el.innerHTML = `
+        <div class="user-badge">
+          <div class="user-avatar ${currentUser.role}">${initials}</div>
+          <span class="user-name">${currentUser.name}</span>
+          <span class="role-tag ${currentUser.role}">${currentUser.role}</span>
+          <button class="btn-logout" onclick="logout()" title="Cerrar sesión">✕</button>
+        </div>`;
+        }
+      }
+
+      function renderAdminBanner() {
+        const b = document.getElementById("adminBanner");
+        b.classList.toggle("visible", currentUser?.role === "admin");
+      }
+
+      /* ── Products ── */
       function renderProducts() {
         const container = document.getElementById("products");
         const filtered =
           currentFilter === "all"
             ? products
             : products.filter((p) => p.category === currentFilter);
+        const isAdmin = currentUser?.role === "admin";
 
         container.innerHTML = filtered
           .map(
             (p, i) => `
       <div class="card" style="animation-delay:${i * 0.07}s">
-        <div class="card-img">
+        <div class="card-img" onclick="openProductModal(${p.id})" style="cursor:pointer">
           <img src="${p.img}" alt="${p.name}" loading="lazy" />
           <span class="card-cat">${catLabels[p.category]}</span>
+          <div class="card-admin-actions ${isAdmin ? "visible" : ""}">
+            <button class="btn-admin-action" title="Editar" onclick="event.stopPropagation(); adminAction('edit',${p.id})">✏️</button>
+            <button class="btn-admin-action" title="Eliminar" onclick="event.stopPropagation(); adminAction('delete',${p.id})">🗑️</button>
+          </div>
         </div>
         <div class="card-body">
-          <div class="card-name">${p.name}</div>
-          <div style="font-size:12px; color:var(--muted); margin-top:2px;">${p.desc}</div>
+          <div class="card-name" onclick="openProductModal(${p.id})" style="cursor:pointer">${p.name}</div>
+          <div style="font-size:12px; color:var(--muted); margin-top:2px;">${p.specs[0]} · ${p.specs[1]}</div>
           <div class="card-price">$${p.price.toLocaleString()} <span>COP</span></div>
-          <button class="btn-add" onclick="addToCart(${p.id})">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Agregar al carrito
-          </button>
+          <div style="display:flex;gap:8px;margin-top:auto">
+            <button class="btn-add" style="flex:1" onclick="addToCart(${p.id})">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar
+            </button>
+            <button class="btn-add" style="background:var(--surface2);width:42px;padding:0;flex-shrink:0" onclick="openProductModal(${p.id})" title="Ver detalles">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     `,
@@ -1059,6 +1617,40 @@
         renderProducts();
       }
 
+      /* ── Product Modal ── */
+      function openProductModal(id) {
+        const p = products.find((p) => p.id === id);
+        document.getElementById("pmImg").src = p.img;
+        document.getElementById("pmImg").alt = p.name;
+        document.getElementById("pmCat").textContent = catLabels[p.category];
+        document.getElementById("pmName").textContent = p.name;
+        document.getElementById("pmDesc").textContent = p.desc;
+        document.getElementById("pmPrice").innerHTML =
+          `$${p.price.toLocaleString()} <small>COP</small>`;
+        document.getElementById("pmSpecs").innerHTML = p.specs
+          .map((s) => `<span class="pm-spec">${s}</span>`)
+          .join("");
+        document.getElementById("pmCartBtn").onclick = () => {
+          addToCart(p.id);
+          closeProductModal();
+        };
+        document.getElementById("productModal").classList.add("open");
+      }
+
+      function closeProductModal(e) {
+        if (!e || e.target === document.getElementById("productModal")) {
+          document.getElementById("productModal").classList.remove("open");
+        }
+      }
+
+      /* ── Admin actions ── */
+      function adminAction(type, id) {
+        const p = products.find((p) => p.id === id);
+        if (type === "edit") showToast(`✏️ Editando: ${p.name}`);
+        if (type === "delete") showToast(`🗑️ Eliminar: ${p.name} (simulado)`);
+      }
+
+      /* ── Cart ── */
       function addToCart(id) {
         const p = products.find((p) => p.id === id);
         cart.push({ ...p, uid: Date.now() });
@@ -1114,21 +1706,6 @@
         document.getElementById("toastMsg").textContent = msg;
         t.classList.add("show");
         setTimeout(() => t.classList.remove("show"), 2800);
-      }
-
-      function openLogin() {
-        document.getElementById("loginModal").classList.add("open");
-      }
-
-      function closeLogin(e) {
-        if (!e || e.target === document.getElementById("loginModal")) {
-          document.getElementById("loginModal").classList.remove("open");
-        }
-      }
-
-      function login() {
-        document.getElementById("loginModal").classList.remove("open");
-        showToast("¡Bienvenido de nuevo! 👋");
       }
 
       function checkout() {
