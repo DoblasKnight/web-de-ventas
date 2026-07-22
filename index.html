@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechSelect — Electrónica Premium</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+      <link rel="stylesheet" href="styles.css" />
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <div class="logo-dot"></div>
+        TechSelect</span>
+      </div>
+      <div class="header-right">
+        <div id="headerAuth">
+          <button class="btn-login" onclick="openLogin()">
+            Iniciar sesión
+          </button>
+        </div>
+        <button class="btn-cart" onclick="toggleCart()">
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 01-8 0" />
+          </svg>
+          Carrito
+          <div class="cart-badge" id="cartCount">0</div>
+        </button>
+      </div>
+    </header>
+
+    <div class="main">
+      <!-- Content -->
+      <div class="content" id="content">
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-label">Catálogo 2025</div>
+          <h2>Tecnología que<br /><em>transforma</em> tu mundo</h2>
+          <p>
+            Explora nuestra selección de productos premium. Calidad garantizada,
+            entrega rápida.
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div class="stat-pill">
+            <div class="stat-dot"></div>
+            <strong>5</strong> Productos
+          </div>
+          <div class="stat-pill">
+            <div class="stat-dot" style="background: var(--accent2)"></div>
+            <strong>3</strong> Categorías
+          </div>
+          <div class="stat-pill">
+            <div class="stat-dot" style="background: var(--accent3)"></div>
+            Envío <strong>gratis</strong>
+          </div>
+        </div>
+
+        <!-- Admin Banner -->
+        <div class="admin-banner" id="adminBanner">
+          <div class="admin-banner-icon">⚙️</div>
+          <div class="admin-banner-text">
+            <strong>Panel de Administrador</strong>
+            <span>Puedes ver las acciones de edición en cada producto</span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <button
+            class="filter-btn active"
+            onclick="filterProducts('all', this)"
+          >
+            Todos
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts('celulares', this)"
+          >
+            📱 Celulares
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts('portatiles', this)"
+          >
+            💻 Portátiles
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts('electrodomesticos', this)"
+          >
+            🏠 Electrodomésticos
+          </button>
+        </div>
+
+        <!-- Products -->
+        <div class="products" id="products"></div>
+      </div>
+
+      <!-- Cart Drawer -->
+      <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+          <div class="cart-title">Tu carrito</div>
+          <button class="btn-close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+          <div class="cart-empty">
+            <div class="cart-empty-icon">🛒</div>
+            <p>Tu carrito está vacío</p>
+          </div>
+        </div>
+        <div class="cart-footer">
+          <div class="cart-total">
+            <span class="cart-total-label">Total</span>
+            <span class="cart-total-amount" id="cartTotal">$0</span>
+          </div>
+          <button class="btn-checkout" onclick="checkout()">
+            Finalizar compra →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal" onclick="closeLogin(event)">
+      <div class="modal">
+        <div class="modal-logo">TechSelect</Select></span></div>
+        <p>Accede a tu cuenta para continuar</p>
+
+        <div class="login-error" id="loginError">
+          ❌ Correo o contraseña incorrectos
+        </div>
+
+        <div class="input-group">
+          <label>Correo electrónico</label>
+          <input type="email" id="email" placeholder="tu@correo.com" />
+        </div>
+        <div class="input-group">
+          <label>Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••" />
+        </div>
+
+        <div
+          style="
+            margin: 12px 0 4px;
+            padding: 12px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.9;
+          "
+        >
+          <strong
+            style="
+              color: var(--accent3);
+              font-size: 11px;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+            "
+            >Cuentas de prueba</strong
+          ><br />
+          <strong style="color: var(--accent3)">admin@tech.com</strong> /
+          admin123 — Administrador<br />
+          <strong style="color: var(--accent)">cliente@tech.com</strong> /
+          cliente123 — Cliente
+        </div>
+
+        <div class="modal-btns">
+          <button class="btn-cancel" onclick="closeLogin()">Cancelar</button>
+          <button class="btn-submit" onclick="login()">Ingresar →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div
+      class="product-modal-overlay"
+      id="productModal"
+      onclick="closeProductModal(event)"
+    >
+      <div class="product-modal" id="productModalBox">
+        <div class="pm-image">
+          <img id="pmImg" src="" alt="" />
+          <div class="pm-image-overlay"></div>
+          <button class="pm-close" onclick="closeProductModal()">✕</button>
+          <span class="pm-cat-badge" id="pmCat"></span>
+        </div>
+        <div class="pm-body">
+          <div class="pm-name" id="pmName"></div>
+          <div class="pm-desc" id="pmDesc"></div>
+          <div class="pm-specs" id="pmSpecs"></div>
+          <div class="pm-footer">
+            <div class="pm-price" id="pmPrice"></div>
+            <div class="pm-actions">
+              <button class="btn-pm-wish" title="Guardar">♡</button>
+              <button class="btn-pm-cart" id="pmCartBtn">
+                Agregar al carrito →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+      <div class="toast-dot"></div>
+      <span id="toastMsg">Producto agregado</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
