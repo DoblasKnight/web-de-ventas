@@ -79,33 +79,18 @@
             <strong>Panel de Administrador</strong>
             <span>Puedes ver las acciones de edición en cada producto</span>
           </div>
+          <button class="btn-new-product" onclick="openCreateProductModal()">
+            + Nuevo producto
+          </button>
         </div>
 
         <!-- Filters -->
-        <div class="filters">
+        <div class="filters" id="filters">
           <button
             class="filter-btn active"
             onclick="filterProducts('all', this)"
           >
             Todos
-          </button>
-          <button
-            class="filter-btn"
-            onclick="filterProducts('celulares', this)"
-          >
-            📱 Celulares
-          </button>
-          <button
-            class="filter-btn"
-            onclick="filterProducts('portatiles', this)"
-          >
-            💻 Portátiles
-          </button>
-          <button
-            class="filter-btn"
-            onclick="filterProducts('electrodomesticos', this)"
-          >
-            🏠 Electrodomésticos
           </button>
         </div>
 
@@ -138,54 +123,244 @@
     </div>
 
     <!-- Login Modal -->
-    <div class="modal-overlay" id="loginModal" onclick="closeLogin(event)">
+    <div class="modal-overlay" id="loginModal">
       <div class="modal">
-        <div class="modal-logo">TechSelect</Select></span></div>
-        <p>Accede a tu cuenta para continuar</p>
+        <button class="modal-close" onclick="closeLogin()">✕</button>
+        <div class="modal-logo">TechSelect</div>
+        <p id="authSubtitle">Accede a tu cuenta para continuar</p>
 
-        <div class="login-error" id="loginError">
-          ❌ Correo o contraseña incorrectos
+        <div class="login-error" id="loginError"></div>
+
+        <div class="input-group" id="nameGroup" style="display: none">
+          <label>Nombre</label>
+          <input type="text" id="name" placeholder="Tu nombre" />
         </div>
-
         <div class="input-group">
           <label>Correo electrónico</label>
           <input type="email" id="email" placeholder="tu@correo.com" />
         </div>
         <div class="input-group">
           <label>Contraseña</label>
-          <input type="password" id="password" placeholder="••••••••" />
-        </div>
-
-        <div
-          style="
-            margin: 12px 0 4px;
-            padding: 12px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 12px;
-            color: var(--muted);
-            line-height: 1.9;
-          "
-        >
-          <strong
-            style="
-              color: var(--accent3);
-              font-size: 11px;
-              letter-spacing: 1px;
-              text-transform: uppercase;
-            "
-            >Cuentas de prueba</strong
-          ><br />
-          <strong style="color: var(--accent3)">admin@tech.com</strong> /
-          admin123 — Administrador<br />
-          <strong style="color: var(--accent)">cliente@tech.com</strong> /
-          cliente123 — Cliente
+          <div class="password-field">
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••"
+              oninput="updatePasswordStrength()"
+            />
+            <button
+              type="button"
+              class="btn-toggle-pw"
+              id="togglePwBtn"
+              onclick="togglePasswordVisibility()"
+              title="Mostrar contraseña"
+            >
+              <svg
+                id="pwIconEye"
+                width="17"
+                height="17"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg
+                id="pwIconEyeOff"
+                width="17"
+                height="17"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                style="display: none"
+              >
+                <path
+                  d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.3 20.3 0 015.06-5.94M9.9 4.24A9.7 9.7 0 0112 4c7 0 11 7 11 7a20.4 20.4 0 01-3.22 4.19M14.12 14.12a3 3 0 11-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
+          <ul class="pw-rules" id="pwRules" style="display: none">
+            <li class="pw-rule" id="pwRuleLen">
+              <span class="pw-dot"></span>Mínimo 8 caracteres
+            </li>
+            <li class="pw-rule" id="pwRuleUpper">
+              <span class="pw-dot"></span>Una mayúscula
+            </li>
+            <li class="pw-rule" id="pwRuleNumber">
+              <span class="pw-dot"></span>Un número
+            </li>
+            <li class="pw-rule" id="pwRuleSymbol">
+              <span class="pw-dot"></span>Un símbolo (!@#$%...)
+            </li>
+          </ul>
         </div>
 
         <div class="modal-btns">
           <button class="btn-cancel" onclick="closeLogin()">Cancelar</button>
-          <button class="btn-submit" onclick="login()">Ingresar →</button>
+          <button class="btn-submit" id="authSubmitBtn" onclick="submitAuth()">
+            Ingresar →
+          </button>
+        </div>
+
+        <div class="auth-switch">
+          <span id="authSwitchText">¿No tienes cuenta?</span>
+          <button type="button" onclick="toggleAuthMode()" id="authSwitchBtn">
+            Crear cuenta
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Email Modal -->
+    <div class="modal-overlay" id="confirmEmailModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeConfirmEmailModal()">✕</button>
+        <div class="confirm-icon">
+          <svg
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" />
+            <path d="M22 6l-10 7L2 6" />
+          </svg>
+        </div>
+        <h3 class="confirm-title">Confirma tu correo electrónico</h3>
+        <p class="confirm-text">
+          Sigue el enlace que enviamos a
+          <strong id="confirmEmailAddress"></strong> para confirmar tu correo
+          y terminar de crear tu cuenta.
+        </p>
+        <div class="modal-btns">
+          <button
+            class="btn-submit"
+            style="flex: 1"
+            onclick="closeConfirmEmailModal()"
+          >
+            Entendido
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Product Confirm Modal (admin) -->
+    <div class="modal-overlay" id="deleteProductModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeDeleteProductModal()">
+          ✕
+        </button>
+        <div class="confirm-icon confirm-icon-danger">
+          <svg
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path d="M3 6h18" />
+            <path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+          </svg>
+        </div>
+        <h3 class="confirm-title">Eliminar producto</h3>
+        <p class="confirm-text">
+          ¿Seguro que quieres eliminar
+          <strong id="deleteProductName"></strong>? Esta acción no se puede
+          deshacer.
+        </p>
+        <div class="modal-btns">
+          <button class="btn-cancel" onclick="closeDeleteProductModal()">
+            Cancelar
+          </button>
+          <button class="btn-submit btn-danger" onclick="confirmDeleteProduct()">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Product Modal (admin) -->
+    <div class="modal-overlay" id="editProductModal">
+      <div class="modal modal-wide">
+        <button class="modal-close" onclick="closeEditProductModal()">
+          ✕
+        </button>
+        <div class="modal-logo" id="editModalTitle">Editar producto</div>
+        <p id="editModalSubtitle">Actualiza la información y guarda los cambios.</p>
+
+        <div class="login-error" id="editProductError"></div>
+
+        <div class="input-group">
+          <label>Nombre</label>
+          <input type="text" id="editName" placeholder="Nombre del producto" />
+        </div>
+
+        <div class="edit-row">
+          <div class="input-group">
+            <label>Categoría</label>
+            <input
+              type="text"
+              id="editCategory"
+              list="categoryOptions"
+              placeholder="ej: celulares"
+            />
+            <datalist id="categoryOptions"></datalist>
+          </div>
+          <div class="input-group">
+            <label>Precio (COP)</label>
+            <input type="number" id="editPrice" min="0" step="1" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Imagen del producto</label>
+          <div class="image-upload">
+            <img id="editImgPreview" class="image-preview" style="display: none" />
+            <input
+              type="file"
+              id="editImgFile"
+              accept="image/*"
+              onchange="previewProductImage()"
+            />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Descripción</label>
+          <textarea id="editDescription" rows="3"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Especificaciones (una por línea)</label>
+          <textarea id="editSpecs" rows="4"></textarea>
+        </div>
+
+        <div class="modal-btns">
+          <button class="btn-cancel" onclick="closeEditProductModal()">
+            Cancelar
+          </button>
+          <button class="btn-submit" id="editSubmitBtn" onclick="saveProductEdit()">
+            Guardar cambios →
+          </button>
         </div>
       </div>
     </div>

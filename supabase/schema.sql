@@ -1,7 +1,4 @@
--- ============================================================
--- TechSelect — esquema de base de datos (Supabase / Postgres)
--- Ejecutar en: Supabase Dashboard → SQL Editor → New query
--- ============================================================
+
 
 -- ── PROFILES ──────────────────────────────────────────────────
 -- Extiende auth.users con nombre y rol (admin/cliente).
@@ -137,15 +134,3 @@ create policy "Users can insert own order items"
   with check (exists (
     select 1 from public.orders o where o.id = order_id and o.user_id = auth.uid()
   ));
-
--- ============================================================
--- Después de correr este script:
--- 1. Ve a Authentication → Users → Add user y crea manualmente:
---      admin@tech.com   / admin123
---      cliente@tech.com / cliente123
---    (el trigger on_auth_user_created les crea su profile con role='cliente')
--- 2. Sube a admin al usuario admin@tech.com con:
---
---    update public.profiles set role = 'admin'
---    where id = (select id from auth.users where email = 'admin@tech.com');
--- ============================================================

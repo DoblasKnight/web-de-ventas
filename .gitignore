@@ -1,0 +1,11 @@
+# Supabase CLI (archivos locales si se usa `supabase` CLI/link)
+supabase/.branches
+supabase/.temp
+
+# Variables de entorno / secretos locales
+.env
+.env.local
+
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
