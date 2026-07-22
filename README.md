@@ -2,6 +2,12 @@
 
 Catálogo de productos con carrito de compras, login con roles (admin/cliente) y panel de administración básico para editar/eliminar productos.
 
+## Repositorio
+
+```
+git clone https://github.com/DoblasKnight/web-de-ventas.git
+```
+
 ## Arquitectura
 
 | Capa | Tecnología |
